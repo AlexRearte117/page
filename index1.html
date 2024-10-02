@@ -128,7 +128,7 @@
         <div class="logo-container">
             <img src="UndecLOGO.png" alt="Logo de Universidad Nacional de Chilecito">
         </div>
-        <h1>Plaza Principal</h1>
+        <h1>Plaza Principallll</h1>
         <h3>Fue fundada el 19 de febrero de 1715 por el español Domingo de Castro y Bazán,
             inicialmente bajo el nombre de Villa Santa Rita, luego cambió a Villa Argentina y finalmente a Chilecito.
         </h3>
@@ -156,6 +156,10 @@
 
         <!--div id="visitas-info"></div>
 
+        <div id="usuario-anonimo-info" class="usuario-anonimo-info">
+            <!-- Información del nuevo usuario anónimo se mostrará aquí -->
+        </div>
+
         <script>
             function actualizarVisitas() {
                 let visitas = localStorage.getItem('visitas') || 0;
@@ -172,9 +176,20 @@
                 `;
             }
 
+            function mostrarUsuarioAnonimo() {
+                const ahora = new Date();
+                const fechaHora = ahora.toLocaleString('es-AR');
+                const usuarioAnonimoInfo = document.getElementById('usuario-anonimo-info');
+                usuarioAnonimoInfo.innerHTML = `
+                    <p>Nuevo usuario anónimo conectado</p>
+                    <p>Fecha y hora: ${fechaHora}</p>
+                `;
+            }
+
             window.onload = actualizarVisitas;
+            window.onload = mostrarUsuarioAnonimo;
         </script>
-    </div-->
+    </div>
 </body>
 
 </html>
