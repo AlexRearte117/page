@@ -160,24 +160,29 @@
 
         <script>
             function registrarVisita() {
-                fetch('http://tu-backend.com/api/registrar-usuario', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ action: 'nuevo_usuario' })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const ahora = new Date();
-                    const fechaHora = ahora.toLocaleString('es-AR');
-                    const usuarioAnonimoInfo = document.getElementById('usuario-anonimo-info');
-                    usuarioAnonimoInfo.innerHTML = `
-                        <p>Nuevo usuario anónimo conectado</p>
-                        <p>Fecha y hora: ${fechaHora}</p>
-                    `;
-                })
-                .catch(error => console.error('Error al registrar usuario:', error));
+                // Verificar si el usuario ya ha sido registrado en esta sesión
+                if (!sessionStorage.getItem('usuarioRegistrado')) {
+                    fetch('http://tu-backend.com/api/registrar-usuario', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ action: 'nuevo_usuario' })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const ahora = new Date();
+                        const fechaHora = ahora.toLocaleString('es-AR');
+                        const usuarioAnonimoInfo = document.getElementById('usuario-anonimo-info');
+                        usuarioAnonimoInfo.innerHTML = `
+                            <p>Nuevo usuario anónimo conectado</p>
+                            <p>Fecha y hora: ${fechaHora}</p>
+                        `;
+                        // Marcar al usuario como registrado en esta sesión
+                        sessionStorage.setItem('usuarioRegistrado', 'true');
+                    })
+                    .catch(error => console.error('Error al registrar usuario:', error));
+                }
             }
 
             window.onload = registrarVisita;
