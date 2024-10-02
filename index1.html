@@ -157,22 +157,29 @@
         <div id="visitas-info"></div>
 
         <script>
-            function actualizarVisitas() {
-                let visitas = localStorage.getItem('visitas') || 0;
-                visitas = parseInt(visitas) + 1;
-                localStorage.setItem('visitas', visitas);
-
-                const ahora = new Date();
-                const fechaHora = ahora.toLocaleString('es-AR');
-
-                const visitasInfo = document.getElementById('visitas-info');
-                visitasInfo.innerHTML = `
-                    <p>Cantidad de visitas: ${visitas}</p>
-                    <p>Fecha y hora: ${fechaHora}</p>
-                `;
+            function registrarVisita() {
+                fetch('http://localhost:8000/api/registrar-usuario', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ action: 'nuevo_usuario' })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Nuevo usuario registrado:', data);  // Verifica la respuesta
+                    const ahora = new Date();
+                    const fechaHora = ahora.toLocaleString('es-AR');
+                    const visitasInfo = document.getElementById('visitas-info');
+                    visitasInfo.innerHTML = `
+                        <p>Nuevo usuario anónimo conectado</p>
+                        <p>Fecha y hora: ${fechaHora}</p>
+                    `;
+                })
+                .catch(error => console.error('Error al registrar usuario:', error));
             }
 
-            window.onload = actualizarVisitas;
+            window.onload = registrarVisita;
         </script>
     </div>
 </body>
