@@ -154,36 +154,25 @@
 
         <a href="https://www.google.com/maps/dir/?api=1&destination=-29.164980, -67.495267" class="cta-button">¿Cómo llegar a la Plaza Principal?</a>
 
-        <div id="usuario-anonimo-info" class="usuario-anonimo-info">
-            <!-- Información del nuevo usuario anónimo se mostrará aquí -->
-        </div>
+        <div id="visitas-info"></div>
 
         <script>
-            function registrarVisita() {
-                if (!sessionStorage.getItem('usuarioRegistrado')) {
-                    fetch('http://localhost:8000/api/registrar-usuario', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ action: 'nuevo_usuario' })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        const ahora = new Date();
-                        const fechaHora = ahora.toLocaleString('es-AR');
-                        const usuarioAnonimoInfo = document.getElementById('usuario-anonimo-info');
-                        usuarioAnonimoInfo.innerHTML = `
-                            <p>Nuevo usuario anónimo conectado</p>
-                            <p>Fecha y hora: ${fechaHora}</p>
-                        `;
-                        sessionStorage.setItem('usuarioRegistrado', 'true');
-                    })
-                    .catch(error => console.error('Error al registrar usuario:', error));
-                }
+            function actualizarVisitas() {
+                let visitas = localStorage.getItem('visitas') || 0;
+                visitas = parseInt(visitas) + 1;
+                localStorage.setItem('visitas', visitas);
+
+                const ahora = new Date();
+                const fechaHora = ahora.toLocaleString('es-AR');
+
+                const visitasInfo = document.getElementById('visitas-info');
+                visitasInfo.innerHTML = `
+                    <p>Cantidad de visitas: ${visitas}</p>
+                    <p>Fecha y hora: ${fechaHora}</p>
+                `;
             }
 
-            window.onload = registrarVisita;
+            window.onload = actualizarVisitas;
         </script>
     </div>
 </body>
