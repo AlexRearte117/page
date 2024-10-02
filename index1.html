@@ -161,11 +161,12 @@
         <script>
             function registrarVisita() {
                 if (!sessionStorage.getItem('usuarioRegistrado')) {
-                    fetch('http://localhost:5000/api/registrar-usuario', {
+                    fetch('http://localhost:8000/api/registrar-usuario', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
-                        }
+                        },
+                        body: JSON.stringify({ action: 'nuevo_usuario' })
                     })
                     .then(response => response.json())
                     .then(data => {
