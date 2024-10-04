@@ -155,8 +155,33 @@
         <a href="https://www.google.com/maps/dir/?api=1&destination=-29.164980, -67.495267" class="cta-button">¿Cómo llegar a la Plaza Principal?</a>
 
         <div id="visitas-info"></div>
-        
     </div>
+
+    <script>
+        function registrarVisita() {
+            fetch('/api/registrar-usuario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ action: 'nuevo_usuario' })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Nuevo usuario registrado:', data);  // Verifica la respuesta
+                const ahora = new Date();
+                const fechaHora = ahora.toLocaleString('es-AR');
+                const visitasInfo = document.getElementById('visitas-info');
+                visitasInfo.innerHTML = `
+                    <p>Nuevo usuario anónimo conectado</p>
+                    <p>Fecha y hora: ${fechaHora}</p>
+                `;
+            })
+            .catch(error => console.error('Error al registrar usuario:', error));
+        }
+
+        window.onload = registrarVisita;
+    </script>
 </body>
 
 </html>
