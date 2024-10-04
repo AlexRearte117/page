@@ -155,39 +155,6 @@
         <a href="https://www.google.com/maps/dir/?api=1&destination=-29.164980, -67.495267" class="cta-button">¿Cómo llegar a la Plaza Principal?</a>
 
         <div id="visitas-info"></div>
-
-        <script>
-            function actualizarVisitas() {
-                let visitas = localStorage.getItem('visitas') || 0;
-                visitas = parseInt(visitas) + 1;
-                localStorage.setItem('visitas', visitas);
-
-                const ahora = new Date();
-                const fechaHora = ahora.toLocaleString('es-AR');
-
-                const visitasInfo = document.getElementById('visitas-info');
-                visitasInfo.innerHTML = `
-                    <p>Cantidad de visitas: ${visitas}</p>
-                    <p>Fecha y hora: ${fechaHora}</p>
-                `;
-            }
-
-            window.onload = actualizarVisitas;
-        </script>
-        <script>
-            function generarQR() {
-                fetch('http://127.0.0.1:8000/generate_qr')
-                .then(response => response.json())
-                .then(data => {
-                    alert('Código QR generado');
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            }
-        </script>
-        
-        <button onclick="generarQR()">Generar QR</button>
         
     </div>
 </body>
